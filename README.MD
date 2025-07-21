@@ -1,0 +1,1 @@
+Repositorio com arquivos Hooks para auxilio de filters Git.

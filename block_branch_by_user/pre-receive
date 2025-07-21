@@ -1,0 +1,19 @@
+#!/bin/sh
+
+BRANCH_PROTEGIDA="refs/heads/master"
+USUARIO_AUTORIZADO="USUARIO_PERMITIDO"
+
+while read oldrev newrev refname; do
+    if [ "$refname" = "$BRANCH_PROTEGIDA" ]; then
+        USER=$(git var GIT_COMMITTER_IDENT | cut -d' ' -f1)
+        echo "User : $USUARIO_AUTORIZADO "
+
+        if [ "$USER" != "$USUARIO_AUTORIZADO" ]; then
+            echo "Push negado para a branch $BRANCH_PROTEGIDA. Apenas $USUARIO_AUTORIZADO pode fazer push." >&2
+            exit 1
+        fi
+    fi
+done
+
+exit 0
+
